@@ -1,0 +1,136 @@
+---
+title: "CCES_clean"
+author: "Zoe Meers"
+date: "4/15/2017"
+output: html_document
+---
+
+```{r}
+#install.packages("haven")
+library(haven)
+library(tidyverse)
+CCES2016 <- read_dta("~/Downloads/CCES2016_Common_FirstRelease.dta")
+```
+
+```{r}
+CCES_clean <- CCES2016 %>%
+  select(V101, CC16_327, CC16_328, CC16_364, CC16_326, CC16_410a, votereg, birthyr, gender, educ, race, CC16_401, CC16_360)
+```
+
+```{r}
+#renaming variables
+CCES_clean<- rename(CCES_clean, "ID"=V101, "p-vote-yn"=CC16_327, "p-vote-who"=CC16_328,"intend-vote-16"=CC16_364, "2012-vote-who"=CC16_326,"vote-nov-who"=CC16_410a, "vote-nov-yn"=CC16_401, "party_id"=CC16_360)
+```
+
+```{r}
+#calculating age of participants
+CCES_clean <- mutate(CCES_clean, age=2017-birthyr)
+```
+
+```{r}
+#getting rid of participants who are not reg'd to vote
+CCES_clean <- filter(CCES_clean, votereg==1)
+```
+
+```{r}
+#party_id
+CCES_clean$party_id[CCES_clean$party_id== "1"] <- "ind"
+CCES_clean$party_id[CCES_clean$party_id== "2"] <- "dem"
+CCES_clean$party_id[CCES_clean$party_id== "3"] <- "rep"
+```
+
+```{r}
+#vote-nov-yn
+CCES_clean$"vote-nov-yn"[CCES_clean$"vote-nov-yn"== "5"] <- "yes"
+CCES_clean$"vote-nov-yn"[CCES_clean$"vote-nov-yn"== "1"] <- "no"
+CCES_clean$"vote-nov-yn"[CCES_clean$"vote-nov-yn"== "2"] <- "no"
+CCES_clean$"vote-nov-yn"[CCES_clean$"vote-nov-yn"== "3"] <- "no"
+CCES_clean$"vote-nov-yn"[CCES_clean$"vote-nov-yn"== "4"] <- "no"
+```
+
+```{r}
+#vote-nov-who
+CCES_clean$"vote-nov-who"[CCES_clean$"vote-nov-who"== "1"] <- "DJT"
+CCES_clean$"vote-nov-who"[CCES_clean$"vote-nov-who"== "2"] <- "HRC"
+CCES_clean$"vote-nov-who"[CCES_clean$"vote-nov-who"== "3"] <- "GJ"
+CCES_clean$"vote-nov-who"[CCES_clean$"vote-nov-who"== "4"] <- "JS"
+CCES_clean$"vote-nov-who"[CCES_clean$"vote-nov-who"== "5"] <- "EM"
+```
+
+```{r}
+#2012-vote-who
+CCES_clean$"2012-vote-who"[CCES_clean$"2012-vote-who"== "1"] <- "BO"
+CCES_clean$"2012-vote-who"[CCES_clean$"2012-vote-who"== "2"] <- "MR"
+CCES_clean$"2012-vote-who"[CCES_clean$"2012-vote-who"== "3"] <- "other"
+```
+
+```{r}
+#intend-vote-16
+CCES_clean$"intend-vote-16"[CCES_clean$"intend-vote-16"== "1"] <- "yes"
+CCES_clean$"intend-vote-16"[CCES_clean$"intend-vote-16"== "2"] <- "probably"
+CCES_clean$"intend-vote-16"[CCES_clean$"intend-vote-16"== "3"] <- "already voted"
+CCES_clean$"intend-vote-16"[CCES_clean$"intend-vote-16"== "4"] <- "no"
+CCES_clean$"intend-vote-16"[CCES_clean$"intend-vote-16"== "5"] <- "undecided"
+```
+
+
+```{r}
+#p-vote-who
+CCES_clean$"p-vote-who"[CCES_clean$"p-vote-who"== "1"] <- "HRC"
+CCES_clean$"p-vote-who"[CCES_clean$"p-vote-who"== "2"] <- "BS"
+CCES_clean$"p-vote-who"[CCES_clean$"p-vote-who"== "3"] <- "other dem"
+CCES_clean$"p-vote-who"[CCES_clean$"p-vote-who"== "4"] <- "DJT"
+CCES_clean$"p-vote-who"[CCES_clean$"p-vote-who"== "5"] <- "TC"
+CCES_clean$"p-vote-who"[CCES_clean$"p-vote-who"== "6"] <- "JK"
+CCES_clean$"p-vote-who"[CCES_clean$"p-vote-who"== "7"] <- "MR"
+CCES_clean$"p-vote-who"[CCES_clean$"p-vote-who"== "8"] <- "other rep"
+CCES_clean$"p-vote-who"[CCES_clean$"p-vote-who"== "9"] <- "independent"
+```
+
+```{r}
+#p-vote-yn
+CCES_clean$"p-vote-yn"[CCES_clean$"p-vote-yn"== "1"] <- "yes"
+CCES_clean$"p-vote-yn"[CCES_clean$"p-vote-yn"== "2"] <- "no"
+```
+
+```{r}
+#race
+CCES_clean$"race"[CCES_clean$"race"== "1"] <- "white"
+CCES_clean$"race"[CCES_clean$"race"== "2"] <- "black"
+CCES_clean$"race"[CCES_clean$"race"== "3"] <- "latino"
+CCES_clean$"race"[CCES_clean$"race"== "4"] <- "asian"
+CCES_clean$"race"[CCES_clean$"race"== "5"] <- "native american"
+CCES_clean$"race"[CCES_clean$"race"== "6"] <- "mixed race"
+CCES_clean$"race"[CCES_clean$"race"== "8"] <- "middle eastern"
+CCES_clean$"race"[CCES_clean$"race"== "7"] <- "other"
+```
+
+
+```{r}
+#educ
+CCES_clean$"educ"[CCES_clean$"educ"== "1"] <- "no HSD"
+CCES_clean$"educ"[CCES_clean$"educ"== "2"] <- "HSG"
+CCES_clean$"educ"[CCES_clean$"educ"== "3"] <- "some college"
+CCES_clean$"educ"[CCES_clean$"educ"== "4"] <- "associates degree"
+CCES_clean$"educ"[CCES_clean$"educ"== "5"] <- "college degree"
+CCES_clean$"educ"[CCES_clean$"educ"== "6"] <- "graduate degree"
+```
+
+```{r}
+#gender
+CCES_clean$"gender"[CCES_clean$"gender"== "1"] <- "male"
+CCES_clean$"gender"[CCES_clean$"gender"== "2"] <- "female"
+```
+
+```{r}
+#votereg
+CCES_clean$"votereg"[CCES_clean$"votereg"== "1"] <- "yes"
+CCES_clean$"votereg"[CCES_clean$"votereg"== "2"] <- "no"
+CCES_clean$"votereg"[CCES_clean$"votereg"== "3"] <- "dk"
+```
+
+
+```{r}
+write.csv(CCES_clean, "CCES_clean.csv")
+```
+
