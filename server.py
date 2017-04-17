@@ -36,12 +36,18 @@ while True:
     print request
 
     if "GET" in request:
+        html = open("index.html")
+        html_data = html.read()
+        html.close()
         http_response = """\
     HTTP/1.1 200 OK
 
-    Hello, World!
     """
-
+        http_response += html_data
+        
+    if "POST" in request:
+        # send something else
+        pass
 
     client_connection.sendall(http_response)
     client_connection.close()

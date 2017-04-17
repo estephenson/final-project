@@ -1,0 +1,102 @@
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Lab 03: Visualization with d3.js</title>
+	</head>
+
+	<body>
+		<style>
+
+		  /* Your CSS goes here */
+
+		  .bar {
+			  fill: steelblue;
+		  }
+
+		  .axis text {
+			  font: 10px sans-serif;
+		  }
+
+		  .axis path,
+		  .axis line {
+			  fill: none;
+			  stroke: #000;
+			  shape-rendering: crispEdges;
+		  }
+		 .x .axis path {
+			 display: none;
+		 }
+
+		</style>
+
+		<script src="https://d3js.org/d3.v4.min.js"></script>
+
+		  <svg class="chart"></svg>
+
+		<script>
+
+		  /* Your JS code goes here */
+		  var margin = {top: 20, right: 20, bottom: 30, left: 40},
+		  		width = 960 - margin.left - margin.right,
+				height = 500 - margin.top - margin.bottom;
+
+		  var svg = d3.select("body").append("svg")
+		  		.attr("width", width + margin.left + margin.right)
+				.attr("height", height + margin.top + margin.bottom)
+			.append("g")
+				.attr("transform",
+						"translate(" + margin.left + "," + margin.top + ")");
+
+			var y = d3.scaleLinear()
+				.range([height, 0]);
+
+			var x = d3.scaleBand()
+				.rangeRound([0, width], .1)
+					.paddingInner(0.1);
+
+			d3.tsv("letters.tsv", function(error, data) {
+					x.domain(data.map(function(d) { return d.letter; }));
+					y.domain([0, d3.max(data, function(d) { return d.frequency; })]);
+					//add the x axis
+					svg.append("g")
+						.attr("class", "x axis")
+						.attr("transform", "translate(0," +height+")")
+						.call(xAxis);
+
+					//add the y axis
+					svg.append("g")
+						.attr("class", "y axis")
+						.call(yAxis);
+
+					svg.selectAll(".bar")
+						.data(data)
+						.enter().append("rect")
+							.attr("class", "bar")
+							.attr("x", function(d) { return x(d.letter); })
+							.attr("width", x.bandwidth())
+							.attr("y", function(d) {
+								console.log("y", y(d.frequency))
+								return y(d.frequency); })
+							.attr("height", function(d) {
+								console.log("height", height-y(d.frequency))
+								return height - y(d.frequency);
+							});
+			});
+
+			var xAxis = d3.axisBottom()
+				.scale(x);
+
+			var yAxis = d3.axisLeft()
+				.scale(y)
+				.ticks(10, "%");
+
+		  //creating a title
+		  svg.append("text")
+		  		.attr("x", (width/2))
+				.attr("y", 0+(margin.top/2))
+				.attr("text-anchor", "middle")
+				.text("Relative Frequency of Letters in the English Alphabet");
+
+		</script>
+  </body>
+</html>
