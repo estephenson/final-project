@@ -10,8 +10,7 @@
 #how to make a db from a csv using sqlite
 
 import socket
-import pandas
-import sqlite3
+# import pandas
 # import mysql.connector
 # import peewee
 # from peewee import *
@@ -28,26 +27,38 @@ listen_socket.listen(1)
 print "Serving HTTP on port %s ..." % PORT
 
 # create an internal pandas "database"
-database = pandas.read_csv("CCES_clean.csv")
+# database = pandas.read_csv("CCES_clean.csv")
 
 while True:
     client_connection, client_address = listen_socket.accept()
     request = client_connection.recv(1024)
     print request
 
-    if "GET" in request:
+    if request[:15] == "GET /index.html":
         html = open("index.html")
         html_data = html.read()
+        # print html_data
         html.close()
         http_response = """\
     HTTP/1.1 200 OK
 
     """
         http_response += html_data
-        
-    if "POST" in request:
-        # send something else
-        pass
+        print http_response
+
+
+    else:
+        http_response = """\
+    HTTP/1.1 200 OK
+
+    """
+        img = open("person.svg")
+        img_data = img.read()
+        # print html_data
+        img.close()
+        http_response += img_data
+        print http_response
+
 
     client_connection.sendall(http_response)
     client_connection.close()
