@@ -48,11 +48,11 @@
 //make the styling better (use classes rather than the style tag)
 
    /* Appening svg to topology Div */
-   var div = d3.select("#d3svg")
+   var div = d3.select("#d3svg");
 
    // top text
    div.append("p")
-   .html('Hello World!')
+   .html('How many Bernie voters do you think voted for Trump in the general election?')
    .style("text-align", "center")
    .style("font-family", "Arial")
    .style("font-size", "30px")
@@ -65,11 +65,12 @@
 
 
    // create the svg to hold the icons
-   svg.append('svg:foreignObject')
+   var foreignObject = svg.append('svg:foreignObject')
    .attr("width", 1300)
    .attr("height", 500)
    .style("text-align", "center")
-   .append("xhtml:ul")
+
+   var icon_holder = foreignObject.append("xhtml:ul")
    .attr("id", "icon-holder")
    .style("margin-top", "100px")
    .style("padding-left", "0")
@@ -102,20 +103,22 @@
    // adding "real" icons to the bottom
 
    //create 6 user icons
-   for (var j=0; j<6; j++) {
-      d3.select("#real-holder")
-         .append('xhml:li')
-         .attr("class", "real-icon")
-         .html('<i class="fa fa-user fa-4x" id="real-bernie"></i>')
-         .style("padding-left", "20px")
-   }
-
-   // create 4 more
    for (var j=0; j<4; j++) {
       d3.select("#real-holder")
          .append('xhml:li')
          .attr("class", "real-icon")
          .html('<i class="fa fa-user fa-4x" id="real-other"></i>')
+         .style("padding-left", "20px")
+   }
+
+
+
+   // create 4 more
+   for (var j=0; j<6; j++) {
+      d3.select("#real-holder")
+         .append('xhml:li')
+         .attr("class", "real-icon")
+         .html('<i class="fa fa-user fa-4x" id="real-bernie"></i>')
          .style("padding-left", "20px")
    }
 
@@ -138,7 +141,21 @@
       })
 
 
-
+   // function createPeople(holder_id, c_name, id_name, number) {
+   //       console.log(holder_id)
+   //       console.log(c_name)
+   //       console.log(id_name)
+   //       console.log(number)
+   //       for (var j=0; j<number; j++) {
+   //          d3.select(holder_id)
+   //             .append('xhml:li')
+   //             .attr("class", c_name)
+   //             .html('<i class="fa fa-user fa-4x" id="id_name"></i>')
+   //             .style("padding-left", "20px")
+   //       }
+   //
+   //
+   //    }
 
 
       </script>
