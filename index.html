@@ -5,18 +5,26 @@
       <script src="https://d3js.org/d3.v3.min.js"></script>
       <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
       <style>
+         body {
+            background-color: #f9fcff;
+         }
+
+         p {
+            font-family: Arial;
+            font-size: 1.5em;
+            text-align: center;
+         }
          .graph {
             background-color:blue;
          }
-         /*body {
-            background-color: blue;
-         }*/
          .icon-holder {
             list-style-type:none;
             display:inline;
+            /*margin: auto;*/
          }
          li {
             display: inline;
+            margin: auto;
          }
 
          .btn {
@@ -25,7 +33,13 @@
             width:300px;
             height:100px;
             background-color:green;
-            /*visibility: hidden;*/
+            margin: auto;
+            border-radius:5%;
+         }
+         /*this styling applies to all icons*/
+         .icon {
+            font-size: 5em;
+            padding-left: 20px;
          }
 
          .real-icon {
@@ -36,6 +50,13 @@
          }
          #real-other {
             color:red;
+         }
+
+         .header-text {
+
+         }
+         #d3svg {
+            max-width: 100%;
          }
       </style>
    </head>
@@ -53,41 +74,43 @@
    // top text
    div.append("p")
    .html('How many Bernie voters do you think voted for Trump in the general election?')
-   .style("text-align", "center")
-   .style("font-family", "Arial")
-   .style("font-size", "30px")
+   .attr("class", "header-text")
+   // .style("text-align", "center")
+   // .style("font-family", "Arial")
+   // .style("font-size", "30px")
 
    // create svg
    var svg = div
    .append("svg")
    .attr("width", "100%")
-   .attr("height", "500px")
+   .attr("height", "350px")
 
 
    // create the svg to hold the icons
    var foreignObject = svg.append('svg:foreignObject')
    .attr("width", 1300)
    .attr("height", 500)
+   // .style("margin", "auto")
    .style("text-align", "center")
 
    var icon_holder = foreignObject.append("xhtml:ul")
    .attr("id", "icon-holder")
    .style("margin-top", "100px")
    .style("padding-left", "0")
-   .style("text-align", "center")
+   // .style("text-align", "center")
 
    //create ten user icons for user to play with
    for (var j=0; j<10; j++) {
       d3.select("#icon-holder")
          .append('xhml:li')
          .attr("class", "icon-holder")
-         .html('<i class="fa fa-user fa-4x" id="d3icon"></i>')
-         .style("padding-left", "20px")
+         .attr("class", "icon")
+         .html('<i class="fa fa-user" id="d3icon"></i>')
    }
 
    // on click, change color of icons
    d3.selectAll("#d3icon")
-   .style("color", "blue")
+   .style("color", "black")
    .on("click", function() {
       d3.select(this)
       .style("color", "red")
@@ -107,8 +130,8 @@
       d3.select("#real-holder")
          .append('xhml:li')
          .attr("class", "real-icon")
-         .html('<i class="fa fa-user fa-4x" id="real-other"></i>')
-         .style("padding-left", "20px")
+         .attr("class", "icon")
+         .html('<i class="fa fa-user" id="real-other"></i>')
    }
 
 
@@ -118,8 +141,8 @@
       d3.select("#real-holder")
          .append('xhml:li')
          .attr("class", "real-icon")
-         .html('<i class="fa fa-user fa-4x" id="real-bernie"></i>')
-         .style("padding-left", "20px")
+         .attr("class", "icon")
+         .html('<i class="fa fa-user" id="real-bernie"></i>')
    }
 
 
@@ -127,7 +150,6 @@
    d3.select("#d3svg")
       .append("div")
       .attr("class", "btn")
-      .attr("width", "500px")
       .attr("height", "150px")
       .append("p")
       .html("Click Me!")
