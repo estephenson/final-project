@@ -1,0 +1,100 @@
+body {
+   background-color: #CAEBF2;
+   /*background-color: #f9fcff;*/
+}
+
+/*div that holds everything on the page*/
+#d3svg {
+   max-width: 100%;
+}
+
+/*styles the text at the top of the screen*/
+.header-text {
+   font-family: "Raleway", sans-serif;
+   text-align: center;
+}
+
+.header-div {
+   margin-left: 10%;
+   margin-right: 10%;
+}
+.header-div p {
+   font-size: 1.2em;
+   /*margin-left: 2%;
+   margin-right: 2%;*/
+}
+
+.header-div h1 {
+   font-size: 2em;
+}
+
+
+#main-svg {
+   width:100%;
+   height: 250px;
+}
+#foreignObject {
+   width: 1300px;
+   height: 500px;
+   text-align: center;
+
+}
+/*this is the styling for the first ul*/
+#icon-holder {
+   list-style-type:none;
+   display:inline;
+   padding-left: 0;
+}
+
+li {
+   display: inline;
+   margin: auto;
+}
+
+/*this styling applies to all icons*/
+.icon {
+   font-size: 5em;
+   padding-left: 20px;
+}
+
+/*ul for the real icons*/
+#real-holder {
+   opacity: 0;
+   /*visibility: hidden;*/
+   padding-left: 0;
+   padding-top: 3%;
+}
+#real-trump {
+   color:red;
+}
+
+/*coloring for the real icons (the hidden ones)*/
+#real-hillary {
+   color:blue;
+}
+
+#real-other {
+   /*color: #55ba48;*/
+   color: green;
+}
+
+/*this styling applies to the bottom buttons*/
+.btn {
+   text-align: center;
+   font-family: "Raleway", sans-serif;
+   font-size:1.5em;
+   color: white;
+   display:block;
+   width:250px;
+   height:50px;
+   background-color:#A9A9A9;
+   margin: auto;
+   border-radius:20%;
+   border:none;
+   outline:none;
+}
+
+.image-div {
+   margin-top:10%;
+   text-align: center;
+}
