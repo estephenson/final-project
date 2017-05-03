@@ -36,7 +36,7 @@
 
          // top text
          d3.select(".header-div").append("p")
-            .html("In this game, you'll guess how many voted for Hillary Clinton, for Donald Trump, or for another candidate.")
+            .html("In this game, you'll look at a representative group of Bernie Sanders voters and guess how they voted in the general elections. Did they choose Donald Trump, Hillary Clinton, or another candidate?")
             .attr("class", "header-text")
 
          // create svg
@@ -110,14 +110,15 @@
             .style("color", icon_color)
          });
 
+      }
+
       function nodraw() {
          d3.selectAll("#d3icon")
             .on("click", function() {
                //do nothing
                //how???
+               console.log("in the nodraw");
             });
-      }
-
       }
 
       function main() {
@@ -135,7 +136,7 @@
             var h1 = d3.select(".header-div").select("h1")
             //going from the very start
             if (current_stage == "beginning") {
-               d3.select(this).html("Next Step")
+               d3.select(this).html("Guess Hillary Voters")
                h1.html("Donald Trump")
                p.html("Click on an icon to indicate a Trump vote.")
                current_stage = stages[1]
@@ -144,6 +145,7 @@
             }
             //ending the Trump step
             else if (current_stage == "Trump") {
+               d3.select(this).html("Guess Other Voters")
                h1.html("Hillary Clinton")
                p.html("Click on an icon to indicate a Hillary vote.")
                current_stage = stages[2]
@@ -176,12 +178,13 @@
                d3.select("#d3svg")
                   .append("div")
                   .attr("class", "image-div")
-                  .html('<img src="bargraph.png" width="1200px" height="500"></img>')
+                  .html('<img src="barchart2.png" width="1200px" height="500"></img>')
+               nodraw();
                }
 
 
          })
-         redraw(current_stage, current_color);
+         // redraw(current_stage, current_color);
       }
 
       main();
